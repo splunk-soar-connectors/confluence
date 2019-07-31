@@ -1,5 +1,3 @@
-docker-compose.yml
-.gitlab-ci.yml
-Makefile
-*.py
-.git*
+test.sh
+.git
+.gitignore
