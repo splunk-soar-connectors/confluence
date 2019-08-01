@@ -135,7 +135,10 @@ class ConfluenceConnector(BaseConnector):
                             verify=config.get('verify_server_cert', False),
                             params=params)
         except Exception as e:
-            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
+            try:
+                return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e).encode('utf-8'))), resp_json)
+            except:
+                return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Please verify the asset configuration parameters."), resp_json)
 
         return self._process_response(r, action_result)
 
