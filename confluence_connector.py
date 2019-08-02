@@ -9,8 +9,6 @@ import phantom.app as phantom
 from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
 
-# Usage of the consts file is recommended
-# from confluence_consts import *
 import requests
 import json
 from bs4 import BeautifulSoup
@@ -30,9 +28,6 @@ class ConfluenceConnector(BaseConnector):
 
         self._state = None
 
-        # Variable to hold a base_url in case the app makes REST calls
-        # Do note that the app json defines the asset config, so please
-        # modify this as you deem fit.
         self._base_url = None
 
     def _process_empty_reponse(self, response, action_result):
@@ -71,11 +66,9 @@ class ConfluenceConnector(BaseConnector):
         except Exception as e:
             return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(str(e))), None)
 
-        # Please specify the status codes here
         if 200 <= r.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
-        # You should process the error returned in the json
         message = "Error from server. Status Code: {0} Data from server: {1}".format(
                 r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
@@ -152,7 +145,6 @@ class ConfluenceConnector(BaseConnector):
         # Also typically it does not add any data into an action_result either.
         # The status and progress messages are more important.
 
-        # self.save_progress("Connecting to endpoint")
         # make rest call
         ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None)
 
@@ -203,8 +195,6 @@ class ConfluenceConnector(BaseConnector):
         # Add the response into the data section
         action_result.add_data(response)
 
-        # action_result.add_data({})
-
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
         summary['comment_id'] = response["id"]
@@ -212,9 +202,6 @@ class ConfluenceConnector(BaseConnector):
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
-
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def _handle_create_page(self, param):
 
@@ -244,8 +231,6 @@ class ConfluenceConnector(BaseConnector):
         # Add the response into the data section
         action_result.add_data(response)
 
-        # action_result.add_data({})
-
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
         summary['page_id'] = response["id"]
@@ -253,9 +238,6 @@ class ConfluenceConnector(BaseConnector):
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
-
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def _handle_get_page(self, param):
 
@@ -331,12 +313,7 @@ class ConfluenceConnector(BaseConnector):
 
         # Access values in asset config by the name
 
-        # Required values can be accessed directly
-        # required_config_name = config['required_config_name']
         self._base_url = config['base_url'].encode('utf-8')
-
-        # Optional values should use the .get() function
-        # optional_config_name = config.get('optional_config_name')
 
         return phantom.APP_SUCCESS
 

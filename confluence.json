@@ -21,24 +21,18 @@
             "description": "Base URL",
             "data_type": "string",
             "required": true,
-            "value_list": [],
-            "default": "",
             "order": 0
         },
         "username": {
             "description": "Username",
             "data_type": "string",
             "required": true,
-            "value_list": [],
-            "default": "",
             "order": 1
         },
         "password": {
             "description": "Password",
             "data_type": "password",
             "required": true,
-            "value_list": [],
-            "default": "",
             "order": 2
         }
     },
@@ -47,7 +41,6 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -74,7 +67,7 @@
                 "body": {
                     "description": "Comment body text",
                     "data_type": "string",
-                    "required": false,
+                    "required": true,
                     "primary": false,
                     "order": 1
                 }
@@ -1096,9 +1089,6 @@
                     "data_type": "string",
                     "required": true,
                     "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
                 },
                 "title": {
@@ -1106,19 +1096,13 @@
                     "data_type": "string",
                     "required": true,
                     "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 1
                 },
                 "parent_page_id": {
-                    "description": "Parent page id",
+                    "description": "Parent page ID",
                     "data_type": "string",
                     "required": false,
                     "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 2
                 }
             },
@@ -1822,8 +1806,8 @@
         {
             "action": "get page",
             "identifier": "get_page",
-            "description": "Get a page",
-            "verbose": "Get a page by name.  This will most likely be used to add additional comments to the page.",
+            "description": "Get a page by name",
+            "verbose": "This will most likely be used to add additional comments to the page.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -1832,9 +1816,6 @@
                     "data_type": "string",
                     "required": true,
                     "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
                 },
                 "title": {
@@ -1842,9 +1823,6 @@
                     "data_type": "string",
                     "required": true,
                     "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 1
                 }
             },
