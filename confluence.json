@@ -78,6 +78,9 @@
                     "data_type": "string",
                     "column_name": "page_id",
                     "column_order": 0,
+                    "contains": [
+                        "confluence page id"
+                    ],
                     "example_values": [
                         "1703966",
                         "1703998"
@@ -1087,8 +1090,11 @@
                 "space_key": {
                     "description": "Name of the space to create the page",
                     "data_type": "string",
+                    "contains": [
+                        "confluence space key"
+                    ],
                     "required": true,
-                    "primary": false,
+                    "primary": true,
                     "order": 0
                 },
                 "title": {
@@ -1101,17 +1107,36 @@
                 "parent_page_id": {
                     "description": "Parent page ID",
                     "data_type": "string",
+                    "contains": [
+                        "confluence page id"
+                    ],
                     "required": false,
-                    "primary": false,
+                    "primary": true,
                     "order": 2
                 }
             },
             "output": [
                 {
+                    "data_path": "action_result.parameter.parent_page_id",
+                    "data_type": "string",
+                    "column_name": "Parent Page ID",
+                    "column_order": 0,
+                    "contains": [
+                        "confluence page id"
+                    ],
+                    "example_values": [
+                        "1703966",
+                        "1703998"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.space_key",
                     "data_type": "string",
-                    "column_name": "space_key",
-                    "column_order": 0,
+                    "column_name": "Space Key",
+                    "column_order": 1,
+                    "contains": [
+                        "confluence space key"
+                    ],
                     "example_values": [
                         "TST"
                     ]
@@ -1120,7 +1145,7 @@
                     "data_path": "action_result.parameter.title",
                     "data_type": "string",
                     "column_name": "title",
-                    "column_order": 1,
+                    "column_order": 2,
                     "example_values": [
                         "Shift Log",
                         "Shift Log 3"
@@ -1130,7 +1155,7 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "status",
-                    "column_order": 2,
+                    "column_order": 3,
                     "example_values": [
                         "success",
                         "failed"
@@ -1815,7 +1840,10 @@
                     "description": "Name of the space containing page",
                     "data_type": "string",
                     "required": true,
-                    "primary": false,
+                    "primary": true,
+                    "contains": [
+                        "confluence space key"
+                    ],
                     "order": 0
                 },
                 "title": {
@@ -1830,8 +1858,11 @@
                 {
                     "data_path": "action_result.parameter.space_key",
                     "data_type": "string",
-                    "column_name": "space_key",
+                    "column_name": "Space Key",
                     "column_order": 0,
+                    "contains": [
+                        "confluence space key"
+                    ],
                     "example_values": [
                         "TST"
                     ]
@@ -1997,6 +2028,8 @@
                 {
                     "data_path": "action_result.data.*.results.*.status",
                     "data_type": "string",
+                    "column_name": "Page Status",
+                    "column_order": 4,
                     "example_values": [
                         "current"
                     ]
@@ -2135,6 +2168,11 @@
                 {
                     "data_path": "action_result.data.*.results.*.id",
                     "data_type": "string",
+                    "column_name": "Page ID",
+                    "column_order": 3,
+                    "contains": [
+                        "confluence page id"
+                    ],
                     "example_values": [
                         "65601",
                         "1703944"

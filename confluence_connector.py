@@ -70,7 +70,10 @@ class ConfluenceConnector(BaseConnector):
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
         message = "Error from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+                r.status_code, r.text.replace('{', '{{').replace('}', '}}').encode('utf-8'))
+
+        if resp_json.get("message"):
+            message = "Error from server. Status Code: {0} Data from server: {1}".format(r.status_code, resp_json.get("message").encode("utf-8"))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
