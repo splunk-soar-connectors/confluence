@@ -76,7 +76,7 @@
                 {
                     "data_path": "action_result.parameter.page_id",
                     "data_type": "string",
-                    "column_name": "page_id",
+                    "column_name": "Page ID",
                     "column_order": 0,
                     "contains": [
                         "confluence page id"
@@ -89,7 +89,7 @@
                 {
                     "data_path": "action_result.parameter.body",
                     "data_type": "string",
-                    "column_name": "body",
+                    "column_name": "Body",
                     "column_order": 1,
                     "example_values": [
                         "IP lookup results on 8.8.8.8:\\n\n\\n\nUS\\n\nUnited States\\n\n37.751\\n\n-97.822"
@@ -98,10 +98,11 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 2,
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -1144,7 +1145,7 @@
                 {
                     "data_path": "action_result.parameter.title",
                     "data_type": "string",
-                    "column_name": "title",
+                    "column_name": "Title",
                     "column_order": 2,
                     "example_values": [
                         "Shift Log",
@@ -1154,7 +1155,7 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 3,
                     "example_values": [
                         "success",
@@ -1166,7 +1167,6 @@
                     "data_type": "string",
                     "example_values": [
                         "Important data: value",
-                        "",
                         "Page id: 1703998"
                     ]
                 },
@@ -1870,7 +1870,7 @@
                 {
                     "data_path": "action_result.parameter.title",
                     "data_type": "string",
-                    "column_name": "title",
+                    "column_name": "Title",
                     "column_order": 1,
                     "example_values": [
                         "Shift Log 2",
@@ -1880,10 +1880,11 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 2,
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
