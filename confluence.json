@@ -1230,6 +1230,125 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.ancestors.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "current"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "New test page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.body",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.operations",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.ancestors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.container",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.descendants",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/20283427/descendant"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.version",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.children",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/20283427/child"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.history",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/20283427/history"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://localhost:8090/rest/api/content/20283427"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TC/New+test+page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._links.tinyui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/x/I4A1AQ"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.extensions.position",
+                    "data_type": "string",
+                    "example_values": [
+                        "none"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "20283427"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
                     "data_type": "string",
                     "example_values": [
