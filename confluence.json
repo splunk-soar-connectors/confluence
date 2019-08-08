@@ -1307,6 +1307,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.space",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TC"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.ancestors.*._links.self",
                     "data_type": "string",
                     "example_values": [
