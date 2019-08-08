@@ -27,8 +27,10 @@ class ConfluenceConnector(BaseConnector):
         super(ConfluenceConnector, self).__init__()
 
         self._state = None
-
         self._base_url = None
+        self._username = None
+        self._password = None
+        self._verify = None
 
     def _process_empty_response(self, response, action_result):
 
@@ -57,7 +59,7 @@ class ConfluenceConnector(BaseConnector):
         message = message.replace('{', '{{').replace('}', '}}')
 
         if len(message) > 500:
-            message = 'Basic Authentication Failure - Reason : AUTHENTICATED_FAILED. This request requires HTTP authentication.Apache Tomcat/8.0.41'
+            message = 'Basic Authentication Failure - Reason : AUTHENTICATED_FAILED. This request requires HTTP authentication.'
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -74,19 +76,19 @@ class ConfluenceConnector(BaseConnector):
 
         msg = ''
         if resp_json.get("message"):
-            msg = resp_json.get("message").encode("utf-8")
+            msg = resp_json.get("message").strip('.').encode("utf-8")
 
         if resp_json.get("data", {}).get("authorized") is not None:
-            msg = "{} Authorized: {}".format(msg, resp_json.get("data", {}).get("authorized"))
+            msg = "{0}Authorized: {1}".format("{0}. ".format(msg) if msg else "", resp_json.get("data", {}).get("authorized"))
 
         if resp_json.get("data", {}).get("errors"):
             for error in resp_json.get("data", {}).get("errors"):
                 if error.get("message", {}).get("key"):
-                    msg = "{} {}".format(msg, error.get("message").get("key").encode("utf-8"))
+                    msg = "{}. {}".format(msg, error.get("message").get("key").strip('.').encode("utf-8"))
 
         if msg:
             message = "Error from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, msg)
+                r.status_code, '{0}.'.format(msg.strip()))
         else:
             message = "Error from server. Status Code: {0} Data from server: {1}".format(
                 r.status_code, r.text.replace('{', '{{').replace('}', '}}').encode('utf-8'))
@@ -126,8 +128,6 @@ class ConfluenceConnector(BaseConnector):
 
     def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
 
-        config = self.get_config()
-
         resp_json = None
 
         try:
@@ -141,16 +141,16 @@ class ConfluenceConnector(BaseConnector):
         try:
             r = request_func(
                             url,
-                            auth=(config['username'], config['password']),
+                            auth=(self._username, self._password),
                             json=data,
                             headers=headers,
-                            verify=config.get('verify_server_cert', False),
+                            verify=self._verify,
                             params=params)
         except Exception as e:
             try:
                 return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e).encode('utf-8'))), resp_json)
             except:
-                return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Please verify the asset configuration parameters"), resp_json)
+                return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Please verify the asset configuration parameters."), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -159,13 +159,8 @@ class ConfluenceConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # NOTE: test connectivity does _NOT_ take any parameters
-        # i.e. the param dictionary passed to this handler will be empty.
-        # Also typically it does not add any data into an action_result either.
-        # The status and progress messages are more important.
-
         # make rest call
-        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None)
+        ret_val, _ = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None)
 
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
@@ -209,8 +204,6 @@ class ConfluenceConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
-
         # Add the response into the data section
         action_result.add_data(response)
 
@@ -245,8 +238,6 @@ class ConfluenceConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
-
         # Add the response into the data section
         action_result.add_data(response)
 
@@ -264,8 +255,6 @@ class ConfluenceConnector(BaseConnector):
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-
-        # Access action parameters passed in the 'param' dictionary
 
         params = {}
         params['expand'] = "body.storage"
@@ -335,6 +324,10 @@ class ConfluenceConnector(BaseConnector):
         self._base_url = config['base_url'].encode('utf-8')
         if self._base_url[-1] == '/':
             self._base_url = self._base_url[:-1]
+
+        self._username = config.get('username')
+        self._password = config.get('password')
+        self._verify = config.get('verify_server_cert', False)
 
         return phantom.APP_SUCCESS
 
