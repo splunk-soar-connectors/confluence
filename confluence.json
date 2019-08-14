@@ -1,0 +1,2249 @@
+{
+    "appid": "2f12181c-e6aa-49c9-82e3-93580798a90f",
+    "name": "Confluence",
+    "description": "This app supports a variety of actions for content generation in Confluence",
+    "type": "information",
+    "product_vendor": "Atlassian",
+    "logo": "logo_atlassian.svg",
+    "logo_dark": "logo_atlassian_dark.svg",
+    "product_name": "Confluence",
+    "product_version_regex": ".*",
+    "publisher": "Splunk",
+    "license": "Copyright (c) 2019 Splunk Inc.",
+    "app_version": "1.0.4",
+    "utctime_updated": "2019-08-13T22:50:00.000000Z",
+    "package_name": "phantom_confluence",
+    "main_module": "confluence_connector.pyc",
+    "min_phantom_version": "4.2.7532",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "base_url": {
+            "description": "Base URL",
+            "data_type": "string",
+            "required": true,
+            "order": 0
+        },
+        "verify_server_cert": {
+            "description": "Verify server SSL certificate",
+            "data_type": "boolean",
+            "required": false,
+            "default": true,
+            "order": 1
+        },
+        "username": {
+            "description": "Username",
+            "data_type": "string",
+            "required": true,
+            "order": 2
+        },
+        "password": {
+            "description": "Password",
+            "data_type": "password",
+            "required": true,
+            "order": 3
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using the supplied configuration",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "add comment",
+            "identifier": "add_comment",
+            "description": "Add a comment to an existing page",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "page_id": {
+                    "description": "ID of the page to post comment",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "confluence page id"
+                    ],
+                    "order": 0
+                },
+                "body": {
+                    "description": "Comment body text",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 2,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.body",
+                    "data_type": "string",
+                    "column_name": "Body",
+                    "column_order": 1,
+                    "example_values": [
+                        "IP lookup results on 1.1.1.1:\\n\n\\n\nUS\\n\nCountry Name\\n\n37.751\\n\n-97.822"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.page_id",
+                    "data_type": "string",
+                    "column_name": "Page ID",
+                    "column_order": 0,
+                    "contains": [
+                        "confluence page id"
+                    ],
+                    "example_values": [
+                        "1703966"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.children",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703967/child"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.descendants",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703967/descendant"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.operations",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.restrictions",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703967/restriction/byOperation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.base",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.collection",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.context",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.168.195.173:9090/rest/api/content/1703967"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST/Shift+Log+3?focusedCommentId=1703967#comment-1703967"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.editor",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.export_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.styled_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body.storage._expandable.content",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703967"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body.storage.representation",
+                    "data_type": "string",
+                    "example_values": [
+                        "storage"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body.storage.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "IP lookup results on 8.8.8.8:\\n\n\\n\nUS\\n\nCountry Name\\n\n37.751\\n\n-97.822"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.ancestors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.body",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.children",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703966/child"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.container",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.descendants",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703966/descendant"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.operations",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.restrictions",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703966/restriction/byOperation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.space",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._links.edit",
+                    "data_type": "string",
+                    "example_values": [
+                        "/pages/resumedraft.action?draftId=1703966"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/content/1703966"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._links.tinyui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/x/HgAa"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST/Shift+Log+3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.extensions.position",
+                    "data_type": "string",
+                    "example_values": [
+                        "none"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history._expandable.contributors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history._expandable.lastUpdated",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history._expandable.nextVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history._expandable.previousVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/content/1703966/history"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy._expandable.status",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/user?key=4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test User"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.profilePicture.height",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.profilePicture.isDefault",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.profilePicture.path",
+                    "data_type": "string",
+                    "example_values": [
+                        "/images/icons/profilepics/default.svg"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.profilePicture.width",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "known"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.userKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdBy.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.createdDate",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-03-04T08:42:52.264-08:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.history.latest",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1703966"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "current"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "Shift Log 3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version._expandable.content",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703966"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/content/1703966/version/1"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by._expandable.status",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/user?key=4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test User"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.profilePicture.height",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.profilePicture.isDefault",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.profilePicture.path",
+                    "data_type": "string",
+                    "example_values": [
+                        "/images/icons/profilepics/default.svg"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.profilePicture.width",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "known"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.userKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.by.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.hidden",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.message",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.minorEdit",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.number",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.version.when",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-03-04T08:42:52.264-08:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.extensions._expandable.resolution",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.extensions.location",
+                    "data_type": "string",
+                    "example_values": [
+                        "footer"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.contributors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.lastUpdated",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.nextVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.previousVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.168.195.173:9090/rest/api/content/1703967/history"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy._expandable.status",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.168.195.173:9090/rest/experimental/user?key=4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test User"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.height",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.isDefault",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.path",
+                    "data_type": "string",
+                    "example_values": [
+                        "/images/icons/profilepics/default.svg"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.width",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "known"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.userKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdDate",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-03-04T08:42:53.578-08:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.latest",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1703967"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.description",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.homepage",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.icon",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.168.195.173:9090/rest/api/space/TST"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        98307
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.key",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "global"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "current"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "Re: Shift Log 3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "comment"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version._expandable.content",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703967"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/content/1703967/version/1"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by._expandable.status",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/user?key=4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test User"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.height",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.isDefault",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.path",
+                    "data_type": "string",
+                    "example_values": [
+                        "/images/icons/profilepics/default.svg"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.width",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "known"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.userKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.hidden",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.message",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.minorEdit",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.number",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.when",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-03-04T08:42:53.578-08:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.comment_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1703999"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.important_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "value"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Important data: value"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "create page",
+            "identifier": "create_page",
+            "description": "Create a page in the space",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "space_key": {
+                    "description": "Name of the space to create the page",
+                    "data_type": "string",
+                    "contains": [
+                        "confluence space key"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 0
+                },
+                "title": {
+                    "description": "Page title",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 1
+                },
+                "parent_page_id": {
+                    "description": "Parent page ID",
+                    "data_type": "string",
+                    "contains": [
+                        "confluence page id"
+                    ],
+                    "required": false,
+                    "primary": true,
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 3,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.parent_page_id",
+                    "data_type": "string",
+                    "column_name": "Parent Page ID",
+                    "column_order": 0,
+                    "contains": [
+                        "confluence page id"
+                    ],
+                    "example_values": [
+                        "1703966"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.space_key",
+                    "data_type": "string",
+                    "column_name": "Space Key",
+                    "column_order": 1,
+                    "contains": [
+                        "confluence space key"
+                    ],
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.title",
+                    "data_type": "string",
+                    "column_name": "Title",
+                    "column_order": 2,
+                    "example_values": [
+                        "Shift Log"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.children",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703942/child"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.descendants",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703942/descendant"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.operations",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._expandable.restrictions",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703942/restriction/byOperation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.base",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.collection",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.context",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.edit",
+                    "data_type": "string",
+                    "example_values": [
+                        "/pages/resumedraft.action?draftId=1703942"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/content/1703942"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.tinyui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/x/BgAa"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST/Shift+Log"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "current"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "New test page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.body",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.operations",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.ancestors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.container",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.descendants",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/20283427/descendant"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.version",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.children",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/20283427/child"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.history",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/20283427/history"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.space",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://localhost:8090/rest/api/content/20283427"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TC/New+test+page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._links.tinyui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/x/I4A1AQ"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.extensions.position",
+                    "data_type": "string",
+                    "example_values": [
+                        "none"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "20283427"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.editor",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.export_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.styled_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body.storage._expandable.content",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703942"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body.storage.representation",
+                    "data_type": "string",
+                    "example_values": [
+                        "storage"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body.storage.value",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.description",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.homepage",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.icon",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/space/TST"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        98307
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.key",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.container.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "global"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.extensions.position",
+                    "data_type": "string",
+                    "example_values": [
+                        "none"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.contributors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.lastUpdated",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.nextVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._expandable.previousVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/content/1703942/history"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy._expandable.status",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/user?key=4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test User"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.height",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.isDefault",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.path",
+                    "data_type": "string",
+                    "example_values": [
+                        "/images/icons/profilepics/default.svg"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.profilePicture.width",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "known"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.userKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdBy.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.createdDate",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-03-04T07:13:16.603-08:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.history.latest",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1703942"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.description",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.homepage",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.icon",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/space/TST"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        98307
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.key",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.space.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "global"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "current"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "Shift Log"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version._expandable.content",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/1703942"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/content/1703942/version/1"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by._expandable.status",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/experimental/user?key=4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test User"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.height",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.isDefault",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.path",
+                    "data_type": "string",
+                    "example_values": [
+                        "/images/icons/profilepics/default.svg"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.profilePicture.width",
+                    "data_type": "numeric",
+                    "example_values": [
+                        48
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "known"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.userKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "4028fa8161b977bf0161b97970730000"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.by.username",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.hidden",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.message",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.minorEdit",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.number",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version.when",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-03-04T07:13:16.603-08:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.important_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "value"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.page_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1703998"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Important data: value"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get page",
+            "identifier": "get_page",
+            "description": "Get a page by name",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "space_key": {
+                    "description": "Name of the space containing the page",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "confluence space key"
+                    ],
+                    "order": 0
+                },
+                "title": {
+                    "description": "Page title",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 2,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.space_key",
+                    "data_type": "string",
+                    "column_name": "Space Key",
+                    "column_order": 0,
+                    "contains": [
+                        "confluence space key"
+                    ],
+                    "example_values": [
+                        "TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.title",
+                    "data_type": "string",
+                    "column_name": "Title",
+                    "column_order": 1,
+                    "example_values": [
+                        "Shift Log 2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.base",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.context",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/content?spaceKey=TST&expand=body.storage&context=guid&context=artifact_id&context=parent_action_run&title=Shift+Log+2"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.limit",
+                    "data_type": "numeric",
+                    "example_values": [
+                        25
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.ancestors",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.children",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601/child"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.container",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.descendants",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601/descendant"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.history",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601/history"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.metadata",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.operations",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.restrictions",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601/restriction/byOperation"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.space",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/space/TST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._expandable.version",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._links.edit",
+                    "data_type": "string",
+                    "example_values": [
+                        "/pages/resumedraft.action?draftId=65601"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._links.self",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://192.16.195.173:9090/rest/api/content/65601"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._links.tinyui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/x/QQAB",
+                        "/x/CAAa"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TST/TST+Home"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body._expandable.anonymous_export_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body._expandable.editor",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body._expandable.export_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body._expandable.styled_view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body._expandable.view",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body.storage._expandable.content",
+                    "data_type": "string",
+                    "example_values": [
+                        "/rest/api/content/65601"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body.storage.representation",
+                    "data_type": "string",
+                    "example_values": [
+                        "storage"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.body.storage.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "<ac:layout><ac:layout-section ac:type=\"single\"><ac:layout-cell>\n<ac:structured-macro ac:name=\"tip\" ac:schema-version=\"1\" ac:macro-id=\"935965cb-dcd1-4334-9f43-d33256d38f67\"><ac:parameter ac:name=\"title\">Welcome to your new space!</ac:parameter><ac:rich-text-body><p>Confluence spaces are great for sharing content and news with your team. This is your home page. Right now it shows recent space activity, but you can customize this page in any way you like.</p></ac:rich-text-body></ac:structured-macro><h2>Complete these tasks to get started</h2><ac:task-list>\n<ac:task>\n<ac:task-id>1</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Edit this home page</strong> - Click <em>Edit</em> in the top right of this screen to customize your Space home page</ac:task-body>\n</ac:task>\n<ac:task>\n<ac:task-id>2</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Create your first page</strong> - Click the <em>Create</em> button in the header to get started</ac:task-body>\n</ac:task>\n<ac:task>\n<ac:task-id>3</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Brand your Space</strong> - Click <em>Configure Sidebar</em> in the left panel to update space details and logo</ac:task-body>\n</ac:task>\n<ac:task>\n<ac:task-id>4</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Set permissions</strong> - Click <em>Space Tools</em> in the left sidebar to update permissions and give others access</ac:task-body>\n</ac:task>\n</ac:task-list><p>&nbsp;</p></ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"two_equal\"><ac:layout-cell>\n<h2>Recent space activity</h2><p><ac:structured-macro ac:name=\"recently-updated\" ac:schema-version=\"1\" ac:macro-id=\"bb48b3e3-1171-4799-867e-32938d991be7\"><ac:parameter ac:name=\"types\">page, comment, blogpost</ac:parameter><ac:parameter ac:name=\"max\">5</ac:parameter><ac:parameter ac:name=\"hideHeading\">true</ac:parameter><ac:parameter ac:name=\"theme\">social</ac:parameter></ac:structured-macro></p></ac:layout-cell><ac:layout-cell>\n<h2>Space contributors</h2><p><ac:structured-macro ac:name=\"contributors\" ac:schema-version=\"1\" ac:macro-id=\"fdf07fe9-d741-4e36-816a-c89d567f054e\"><ac:parameter ac:name=\"mode\">list</ac:parameter><ac:parameter ac:name=\"scope\">descendants</ac:parameter><ac:parameter ac:name=\"limit\">5</ac:parameter><ac:parameter ac:name=\"showLastTime\">true</ac:parameter><ac:parameter ac:name=\"order\">update</ac:parameter></ac:structured-macro></p></ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"single\"><ac:layout-cell>\n<p>&nbsp;</p></ac:layout-cell></ac:layout-section></ac:layout>"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.extensions.position",
+                    "data_type": "string",
+                    "example_values": [
+                        "none"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.id",
+                    "data_type": "string",
+                    "column_name": "Page ID",
+                    "column_order": 3,
+                    "contains": [
+                        "confluence page id"
+                    ],
+                    "example_values": [
+                        "65601"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.status",
+                    "data_type": "string",
+                    "column_name": "Page Status",
+                    "column_order": 4,
+                    "example_values": [
+                        "current"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "TST Home"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.size",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.start",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.important_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "value"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.page_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1703944"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Important data: value"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
