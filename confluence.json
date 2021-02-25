@@ -17,7 +17,9 @@
     "min_phantom_version": "4.9.39220",
     "app_wizard_version": "1.0.0",
     "python_version": "3",
-    "latest_tested_version": [],
+    "latest_tested_versions": [
+        "On prem, Atlassian Confluence version 6.0.6"
+    ],
     "configuration": {
         "base_url": {
             "description": "Base URL",
