@@ -28,7 +28,7 @@
         "verify_server_cert": {
             "description": "Verify server SSL certificate",
             "data_type": "boolean",
-            "default": true,
+            "default": false,
             "order": 1
         },
         "username": {
