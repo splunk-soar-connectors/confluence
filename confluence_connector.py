@@ -391,7 +391,7 @@ if __name__ == '__main__':
             data['csrfmiddlewaretoken'] = csrftoken
 
             headers = {
-                'Cookie': f'csrftoken={csrftoken}',
+                'Cookie': "csrftoken={}".format(csrftoken),
                 'Referer': login_url
             }
 
