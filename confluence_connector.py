@@ -390,9 +390,10 @@ if __name__ == '__main__':
             data['password'] = password
             data['csrfmiddlewaretoken'] = csrftoken
 
-            headers = dict()
-            headers['Cookie'] = 'csrftoken=' + csrftoken
-            headers['Referer'] = login_url
+            headers = {
+                'Cookie': f'csrftoken={csrftoken}',
+                'Referer': login_url
+            }
 
             print("Logging into Platform to get the session id")
             r2 = requests.post(login_url, verify=False, data=data, headers=headers)
