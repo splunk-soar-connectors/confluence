@@ -385,10 +385,11 @@ if __name__ == '__main__':
             r = requests.get(login_url, verify=False)
             csrftoken = r.cookies['csrftoken']
 
-            data = dict()
-            data['username'] = username
-            data['password'] = password
-            data['csrfmiddlewaretoken'] = csrftoken
+            data = {
+                'username': username,
+                'password': password,
+                'csrfmiddlewaretoken': csrftoken
+            }
 
             headers = {
                 'Cookie': "csrftoken={}".format(csrftoken),
