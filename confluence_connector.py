@@ -143,13 +143,12 @@ class ConfluenceConnector(BaseConnector):
         url = "{}{}".format(self._base_url, endpoint)
 
         try:
-            r = request_func(
-                url,
-                auth=(self._username, self._password),
-                json=data,
-                headers=headers,
-                verify=self._verify,
-                params=params)
+            r = request_func(url,
+                             auth=(self._username, self._password),
+                             json=data,
+                             headers=headers,
+                             verify=self._verify,
+                             params=params)
         except Exception as e:
             try:
                 return RetVal(action_result.set_status(phantom.APP_ERROR,
