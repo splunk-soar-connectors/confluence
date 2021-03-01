@@ -1,5 +1,5 @@
 # File: confluence_connector.py
-# Copyright (c) 2019 Splunk Inc.
+# Copyright (c) 2019-2021 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -37,7 +37,8 @@ class ConfluenceConnector(BaseConnector):
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"),
+                      None)
 
     def _process_html_response(self, response, action_result):
 
@@ -54,7 +55,7 @@ class ConfluenceConnector(BaseConnector):
             error_text = "Cannot parse error details"
 
         message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code,
-                error_text)
+                                                                      error_text)
 
         message = message.replace('{', '{{').replace('}', '}}')
 
@@ -69,7 +70,9 @@ class ConfluenceConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(str(e))), None)
+            return RetVal(
+                action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(str(e))),
+                None)
 
         if 200 <= r.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
@@ -79,7 +82,8 @@ class ConfluenceConnector(BaseConnector):
             msg = resp_json.get("message").strip('.').encode("utf-8")
 
         if resp_json.get("data", {}).get("authorized") is not None:
-            msg = "{0}Authorized: {1}".format("{0}. ".format(msg) if msg else "", resp_json.get("data", {}).get("authorized"))
+            msg = "{0}Authorized: {1}".format("{0}. ".format(msg) if msg else "",
+                                              resp_json.get("data", {}).get("authorized"))
 
         if resp_json.get("data", {}).get("errors"):
             for error in resp_json.get("data", {}).get("errors"):
@@ -122,7 +126,7 @@ class ConfluenceConnector(BaseConnector):
 
         # everything else is actually an error at this point
         message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+            r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -139,18 +143,21 @@ class ConfluenceConnector(BaseConnector):
         url = "{}{}".format(self._base_url, endpoint)
 
         try:
-            r = request_func(
-                            url,
-                            auth=(self._username, self._password),
-                            json=data,
-                            headers=headers,
-                            verify=self._verify,
-                            params=params)
+            r = request_func(url,
+                             auth=(self._username, self._password),
+                             json=data,
+                             headers=headers,
+                             verify=self._verify,
+                             params=params)
         except Exception as e:
             try:
-                return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e).encode('utf-8'))), resp_json)
+                return RetVal(action_result.set_status(phantom.APP_ERROR,
+                                                       "Error Connecting to server. Details: {0}".format(
+                                                           str(e).encode('utf-8'))), resp_json)
             except:
-                return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Please verify the asset configuration parameters."), resp_json)
+                return RetVal(action_result.set_status(phantom.APP_ERROR,
+                                                       "Error Connecting to server. Please verify the asset configuration parameters."),
+                              resp_json)
 
         return self._process_response(r, action_result)
 
@@ -181,25 +188,28 @@ class ConfluenceConnector(BaseConnector):
         page_id = param['page_id']
         body = param.get('body', '')
 
-        _headers = {}
-        _headers['Accept'] = 'application/json'
-        _headers['Content-Type'] = 'application/json'
+        _headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
 
-        data = {"type": "comment",
-                "container": {
-                    "id": page_id,
-                    "type": "page",
-                    "status": "current"
-                },
-                "body": {
-                    "storage": {
-                        "value": body,
-                        "representation": "storage"
-                    }
+        data = {
+            "type": "comment",
+            "container": {
+                "id": page_id,
+                "type": "page",
+                "status": "current"
+            },
+            "body": {
+                "storage": {
+                    "value": body,
+                    "representation": "storage"
                 }
-                }
+            }
+        }
 
-        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=_headers, data=data, method="post")
+        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=_headers,
+                                                 data=data, method="post")
 
         if phantom.is_fail(ret_val):
             return action_result.get_status()
@@ -224,16 +234,19 @@ class ConfluenceConnector(BaseConnector):
         space_key = param['space_key']
         title = param['title']
 
-        data = {}
-        data['type'] = "page"
-        data['space'] = {}
-        data['space']['key'] = space_key
-        data['title'] = title
+        data = {
+            'type': 'page',
+            'space': {
+                'key': space_key
+            },
+            'title': title
+        }
         ancestor_id = param.get('parent_page_id')
         if ancestor_id:
             data['ancestors'] = [{'id': ancestor_id}]
 
-        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None, data=data, method="post")
+        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None,
+                                                 data=data, method="post")
 
         if phantom.is_fail(ret_val):
             return action_result.get_status()
@@ -256,10 +269,11 @@ class ConfluenceConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        params = {}
-        params['expand'] = "body.storage"
-        params['spaceKey'] = param['space_key']
-        params['title'] = param['title']
+        params = {
+            'expand': "body.storage",
+            'spaceKey': param['space_key'],
+            'title': param['title']
+        }
 
         # make rest call
         ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=params, headers=None)
@@ -321,10 +335,9 @@ class ConfluenceConnector(BaseConnector):
 
         # Access values in asset config by the name
 
-        self._base_url = config['base_url'].encode('utf-8')
+        self._base_url = config['base_url']
         if self._base_url[-1] == '/':
             self._base_url = self._base_url[:-1]
-
         self._username = config.get('username')
         self._password = config.get('password')
         self._verify = config.get('verify_server_cert', False)
@@ -358,37 +371,39 @@ if __name__ == '__main__':
     username = args.username
     password = args.password
 
-    if (username is not None and password is None):
-
+    if username is not None and password is None:
         # User specified a username but not a password, so ask
         import getpass
+
         password = getpass.getpass("Password: ")
 
-    if (username and password):
+    if username and password:
         try:
             login_url = BaseConnector._get_phantom_base_url() + "login"
-            print ("Accessing the Login page")
+            print("Accessing the Login page")
             r = requests.get(login_url, verify=False)
             csrftoken = r.cookies['csrftoken']
 
-            data = dict()
-            data['username'] = username
-            data['password'] = password
-            data['csrfmiddlewaretoken'] = csrftoken
+            data = {
+                'username': username,
+                'password': password,
+                'csrfmiddlewaretoken': csrftoken
+            }
 
-            headers = dict()
-            headers['Cookie'] = 'csrftoken=' + csrftoken
-            headers['Referer'] = login_url
+            headers = {
+                'Cookie': "csrftoken={}".format(csrftoken),
+                'Referer': login_url
+            }
 
-            print ("Logging into Platform to get the session id")
+            print("Logging into Platform to get the session id")
             r2 = requests.post(login_url, verify=False, data=data, headers=headers)
             session_id = r2.cookies['sessionid']
         except Exception as e:
-            print ("Unable to get session id from the platfrom. Error: " + str(e))
+            print("Unable to get session id from the platform. Error: " + str(e))
             exit(1)
 
-    if (len(sys.argv) < 2):
-        print "No test json specified as input"
+    if len(sys.argv) < 2:
+        print("No test json specified as input")
         exit(0)
 
     with open(sys.argv[1]) as f:
@@ -403,6 +418,6 @@ if __name__ == '__main__':
             in_json['user_session_token'] = session_id
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
-        print (json.dumps(json.loads(ret_val), indent=4))
+        print(json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)

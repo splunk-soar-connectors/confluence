@@ -9,13 +9,17 @@
     "product_name": "Confluence",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2019 Splunk Inc.",
-    "app_version": "1.0.4",
-    "utctime_updated": "2019-08-13T22:50:00.000000Z",
+    "license": "Copyright (c) 2019-2021 Splunk Inc.",
+    "app_version": "2.0.0",
+    "utctime_updated": "2019-08-14T03:21:27.000000Z",
     "package_name": "phantom_confluence",
-    "main_module": "confluence_connector.pyc",
-    "min_phantom_version": "4.2.7532",
+    "main_module": "confluence_connector.py",
+    "min_phantom_version": "4.9.39220",
     "app_wizard_version": "1.0.0",
+    "python_version": "3",
+    "latest_tested_versions": [
+        "On prem, Atlassian Confluence version 6.0.6"
+    ],
     "configuration": {
         "base_url": {
             "description": "Base URL",
@@ -26,8 +30,7 @@
         "verify_server_cert": {
             "description": "Verify server SSL certificate",
             "data_type": "boolean",
-            "required": false,
-            "default": true,
+            "default": false,
             "order": 1
         },
         "username": {
@@ -126,17 +129,11 @@
                 },
                 {
                     "data_path": "action_result.data.*._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._expandable.operations",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._expandable.restrictions",
@@ -164,10 +161,7 @@
                 },
                 {
                     "data_path": "action_result.data.*._links.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._links.self",
@@ -188,38 +182,23 @@
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.editor",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.export_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.styled_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body.storage._expandable.content",
@@ -244,17 +223,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.ancestors",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.body",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.children",
@@ -279,17 +252,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.operations",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.restrictions",
@@ -345,31 +312,19 @@
                 },
                 {
                     "data_path": "action_result.data.*.container.history._expandable.contributors",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.history._expandable.lastUpdated",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.history._expandable.nextVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.history._expandable.previousVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.history._links.self",
@@ -383,10 +338,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.container.history.createdBy._expandable.status",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.history.createdBy._links.self",
@@ -523,10 +475,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.container.version.by._expandable.status",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.version.by._links.self",
@@ -611,10 +560,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.container.version.message",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container.version.minorEdit",
@@ -640,10 +586,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.extensions._expandable.resolution",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.extensions.location",
@@ -654,31 +597,19 @@
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.contributors",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.lastUpdated",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.nextVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.previousVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._links.self",
@@ -692,10 +623,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.history.createdBy._expandable.status",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history.createdBy._links.self",
@@ -794,10 +722,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.homepage",
@@ -808,17 +733,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.icon",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.space._links.self",
@@ -905,10 +824,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.version.by._expandable.status",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.version.by._links.self",
@@ -993,10 +909,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.version.message",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.version.minorEdit",
@@ -1090,7 +1003,6 @@
                     "contains": [
                         "confluence page id"
                     ],
-                    "required": false,
                     "primary": true,
                     "order": 2
                 }
@@ -1155,17 +1067,11 @@
                 },
                 {
                     "data_path": "action_result.data.*._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._expandable.operations",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._expandable.restrictions",
@@ -1193,10 +1099,7 @@
                 },
                 {
                     "data_path": "action_result.data.*._links.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._links.edit",
@@ -1230,38 +1133,18 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.ancestors.*.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "current"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ancestors.*.title",
-                    "data_type": "string",
-                    "example_values": [
-                        "New test page"
-                    ]
+                    "data_path": "action_result.data.*.ancestors.*._expandable.ancestors",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.ancestors.*._expandable.body",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.ancestors.*._expandable.operations",
+                    "data_path": "action_result.data.*.ancestors.*._expandable.children",
                     "data_type": "string",
                     "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ancestors.*._expandable.ancestors",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
+                        "/rest/api/content/20283427/child"
                     ]
                 },
                 {
@@ -1279,32 +1162,19 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.ancestors.*._expandable.version",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ancestors.*._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ancestors.*._expandable.children",
-                    "data_type": "string",
-                    "example_values": [
-                        "/rest/api/content/20283427/child"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.ancestors.*._expandable.history",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/content/20283427/history"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.metadata",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.operations",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.ancestors.*._expandable.space",
@@ -1314,17 +1184,14 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.ancestors.*._expandable.version",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.ancestors.*._links.self",
                     "data_type": "string",
                     "example_values": [
                         "http://localhost:8090/rest/api/content/20283427"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ancestors.*._links.webui",
-                    "data_type": "string",
-                    "example_values": [
-                        "/display/TC/New+test+page"
                     ]
                 },
                 {
@@ -1335,17 +1202,17 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.ancestors.*._links.webui",
+                    "data_type": "string",
+                    "example_values": [
+                        "/display/TC/New+test+page"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.ancestors.*.extensions.position",
                     "data_type": "string",
                     "example_values": [
                         "none"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ancestors.*.type",
-                    "data_type": "string",
-                    "example_values": [
-                        "page"
                     ]
                 },
                 {
@@ -1356,39 +1223,45 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
+                    "data_path": "action_result.data.*.ancestors.*.status",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "current"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "New test page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ancestors.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "page"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.editor",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.export_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.styled_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body._expandable.view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.body.storage._expandable.content",
@@ -1406,17 +1279,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.body.storage.value",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.homepage",
@@ -1427,17 +1294,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.icon",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.container._links.self",
@@ -1493,31 +1354,19 @@
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.contributors",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.lastUpdated",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.nextVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._expandable.previousVersion",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history._links.self",
@@ -1531,10 +1380,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.history.createdBy._expandable.status",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.history.createdBy._links.self",
@@ -1633,10 +1479,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.homepage",
@@ -1647,17 +1490,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.icon",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.space._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.space._links.self",
@@ -1744,10 +1581,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.version.by._expandable.status",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.version.by._links.self",
@@ -1832,10 +1666,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.version.message",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.version.minorEdit",
@@ -1968,10 +1799,7 @@
                 },
                 {
                     "data_path": "action_result.data.*._links.context",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*._links.self",
@@ -1992,10 +1820,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.results.*._expandable.ancestors",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*._expandable.children",
@@ -2027,17 +1852,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.results.*._expandable.metadata",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*._expandable.operations",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*._expandable.restrictions",
@@ -2055,10 +1874,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.results.*._expandable.version",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*._links.edit",
@@ -2094,38 +1910,23 @@
                 },
                 {
                     "data_path": "action_result.data.*.results.*.body._expandable.anonymous_export_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*.body._expandable.editor",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*.body._expandable.export_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*.body._expandable.styled_view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*.body._expandable.view",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.results.*.body.storage._expandable.content",
