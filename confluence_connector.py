@@ -15,13 +15,13 @@
 #
 #
 # Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
-import requests
 import json
+
+import phantom.app as phantom
+import requests
 from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 
 class RetVal(tuple):
@@ -233,6 +233,7 @@ class ConfluenceConnector(BaseConnector):
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
+        self.save_progress("In action handler for: {0}. Action Status: {1}".format(self.get_action_identifier(), phantom.APP_SUCCESS))
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_create_page(self, param):
@@ -270,6 +271,7 @@ class ConfluenceConnector(BaseConnector):
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
+        self.save_progress("In action handler for: {0}. Action Status: {1}".format(self.get_action_identifier(), phantom.APP_SUCCESS))
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_page(self, param):
@@ -363,9 +365,10 @@ class ConfluenceConnector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import sys
-    import pudb
     import argparse
+    import sys
+
+    import pudb
 
     pudb.set_trace()
 
