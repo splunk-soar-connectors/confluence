@@ -14,7 +14,7 @@
 # and limitations under the License.
 #
 #
- # Phantom App imports
+# Phantom App imports
 import json
 
 import phantom.app as phantom
