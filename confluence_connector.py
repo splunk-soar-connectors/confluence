@@ -178,8 +178,12 @@ class ConfluenceConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
+        params = {
+            'limit': 5
+        }
+
         # make rest call
-        ret_val, _ = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None)
+        ret_val, _ = self._make_rest_call('/wiki/api/v2/pages', action_result, params=params, headers=None)
 
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
@@ -206,12 +210,7 @@ class ConfluenceConnector(BaseConnector):
         }
 
         data = {
-            "type": "comment",
-            "container": {
-                "id": page_id,
-                "type": "page",
-                "status": "current"
-            },
+            "pageId": page_id,
             "body": {
                 "storage": {
                     "value": body,
@@ -220,7 +219,7 @@ class ConfluenceConnector(BaseConnector):
             }
         }
 
-        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=_headers,
+        ret_val, response = self._make_rest_call('/wiki/api/v2/footer-comments', action_result, params=None, headers=_headers,
                                                  data=data, method="post")
 
         if phantom.is_fail(ret_val):
@@ -248,17 +247,14 @@ class ConfluenceConnector(BaseConnector):
         title = param['title']
 
         data = {
-            'type': 'page',
-            'space': {
-                'key': space_key
-            },
+            "spaceId": space_key,
             'title': title
         }
         ancestor_id = param.get('parent_page_id')
         if ancestor_id:
             data['ancestors'] = [{'id': ancestor_id}]
 
-        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=None, headers=None,
+        ret_val, response = self._make_rest_call('/wiki/api/v2/pages', action_result, params=None, headers=None,
                                                  data=data, method="post")
 
         if phantom.is_fail(ret_val):
@@ -284,13 +280,12 @@ class ConfluenceConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         params = {
-            'expand': "body.storage",
-            'spaceKey': param['space_key'],
+            'spaceId:': param['space_key'],
             'title': param['title']
         }
 
         # make rest call
-        ret_val, response = self._make_rest_call('/rest/api/content', action_result, params=params, headers=None)
+        ret_val, response = self._make_rest_call('/wiki/api/v2/pages', action_result, params=params, headers=None)
 
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
