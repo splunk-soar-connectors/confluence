@@ -1,8 +1,9 @@
 repos:
 -   repo: https://github.com/phantomcyber/dev-cicd-tools
-    rev: v1.16
+    rev: v1.24
     hooks:
     -   id: org-hook
+    -   id: readme-check
     -   id: package-app-dependencies
 -   repo: https://github.com/Yelp/detect-secrets
     rev: v1.4.0
