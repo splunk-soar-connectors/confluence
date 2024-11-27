@@ -40,11 +40,17 @@
             "required": true,
             "order": 2
         },
-        "password": {
-            "description": "Password",
-            "data_type": "password",
+        "apitoken": {
+            "description": "API Token",
+            "data_type": "API Token",
             "required": true,
             "order": 3
+        },
+        "base_path": {
+            "description": "Base Path",
+            "data_type": "Base Path",
+            "required": true,
+            "order": 4
         }
     },
     "actions": [

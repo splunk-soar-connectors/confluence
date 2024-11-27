@@ -40,8 +40,9 @@ class ConfluenceConnector(BaseConnector):
 
         self._state = None
         self._base_url = None
+        self._base_path = None
         self._username = None
-        self._password = None
+        self._apiToken = None
         self._verify = None
 
     def _process_empty_response(self, response, action_result):
@@ -148,10 +149,10 @@ class ConfluenceConnector(BaseConnector):
             return RetVal(action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method)), resp_json)
 
         # Create a URL to connect to
-        url = "{}{}".format(self._base_url, endpoint)
+        url = "{}{}{}".format(self._base_url, self._base_path, endpoint)
 
         try:
-            r = request_func(url, auth=(self._username, self._password), json=data, headers=headers, verify=self._verify, params=params)
+            r = request_func(url, auth=(self._username, self._apiToken), json=data, headers=headers, verify=self._verify, params=params)
         except Exception as e:
             try:
                 return RetVal(
@@ -320,8 +321,9 @@ class ConfluenceConnector(BaseConnector):
         self._base_url = config["base_url"]
         if self._base_url[-1] == "/":
             self._base_url = self._base_url[:-1]
+        self._base_path = config["base_path"]
         self._username = config.get("username")
-        self._password = config.get("password")
+        self._apiToken = config.get("apitoken")
         self._verify = config.get("verify_server_cert", False)
 
         return phantom.APP_SUCCESS
