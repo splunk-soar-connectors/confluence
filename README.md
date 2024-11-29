@@ -2,11 +2,11 @@
 # Confluence
 
 Publisher: Splunk  
-Connector Version: 2.0.4  
+Connector Version: 3.0.0  
 Product Vendor: Atlassian  
 Product Name: Confluence  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.1.0  
+Minimum Product Version: 6.3.0  
 
 This app supports a variety of actions for content generation in Confluence
 
