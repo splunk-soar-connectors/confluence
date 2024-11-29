@@ -44,11 +44,7 @@ class ConfluenceConnector(BaseConnector):
 
     def _process_response(self, r, action_result):
         if hasattr(action_result, "add_debug_data"):
-            action_result.add_debug_data({
-                "r_status_code": r.status_code,
-                "r_text": r.text,
-                "r_headers": r.headers
-            })
+            action_result.add_debug_data({"r_status_code": r.status_code, "r_text": r.text, "r_headers": r.headers})
 
         content_type = r.headers.get("Content-Type", "").lower()
 
@@ -108,7 +104,7 @@ class ConfluenceConnector(BaseConnector):
                 headers=headers,
                 verify=self._verify,
                 params=params,
-                timeout=DEFAULT_REQUEST_TIMEOUT
+                timeout=DEFAULT_REQUEST_TIMEOUT,
             )
         except Exception as e:
             return RetVal(action_result.set_status(phantom.APP_ERROR, f"Connection error: {str(e)}"), None)
@@ -137,27 +133,18 @@ class ConfluenceConnector(BaseConnector):
         title = param["title"]
         parent_page_id = param.get("parent_page_id")
 
-        data = {
-            "spaceId": space_key,
-            "title": title,
-            "parent_page_id": parent_page_id
-        }
+        data = {"spaceId": space_key, "title": title, "parent_page_id": parent_page_id}
 
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
-        ret_val, response = self._make_rest_call(
-            "/pages", action_result, headers=headers, data=data, method="post"
-        )
+        ret_val, response = self._make_rest_call("/pages", action_result, headers=headers, data=data, method="post")
 
         if phantom.is_fail(ret_val):
             self.save_progress(f"Failed to create page: {action_result.get_message()}")
             return action_result.get_status()
 
         action_result.add_data(response)
-        summary = action_result.update_summary({"page_id": response.get("id")})
+        action_result.update_summary({"page_id": response.get("id")})
         self.save_progress("Page created successfully.")
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -167,31 +154,18 @@ class ConfluenceConnector(BaseConnector):
         page_id = param["page_id"]
         body = param.get("body", "")
 
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
-        data = {
-            "pageId": page_id,
-            "body": {
-                "storage": {
-                    "value": body,
-                    "representation": "storage"
-                }
-            }
-        }
+        data = {"pageId": page_id, "body": {"storage": {"value": body, "representation": "storage"}}}
 
-        ret_val, response = self._make_rest_call(
-            "/footer-comments", action_result, headers=headers, data=data, method="post"
-        )
+        ret_val, response = self._make_rest_call("/footer-comments", action_result, headers=headers, data=data, method="post")
 
         if phantom.is_fail(ret_val):
             self.save_progress(f"Failed to add comment: {action_result.get_message()}")
             return action_result.get_status()
 
         action_result.add_data(response)
-        summary = action_result.update_summary({"comment_id": response.get("id")})
+        action_result.update_summary({"comment_id": response.get("id")})
         self.save_progress("Comment added successfully.")
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -202,19 +176,12 @@ class ConfluenceConnector(BaseConnector):
         space_key = param["space_key"]
         title = param["title"]
 
-        params = {
-            "spaceKey": space_key,
-            "title": title
-        }
+        params = {"spaceKey": space_key, "title": title}
 
-        headers = {
-            "Accept": "application/json"
-        }
+        headers = {"Accept": "application/json"}
 
         # Make the GET request to fetch the page
-        ret_val, response = self._make_rest_call(
-            "/pages", action_result, headers=headers, params=params, method="get"
-        )
+        ret_val, response = self._make_rest_call("/pages", action_result, headers=headers, params=params, method="get")
 
         if phantom.is_fail(ret_val):
             self.save_progress(f"Failed to retrieve page: {action_result.get_message()}")
@@ -229,7 +196,7 @@ class ConfluenceConnector(BaseConnector):
 
         # Add the first page result to data
         action_result.add_data(results[0])
-        summary = action_result.update_summary({"page_id": results[0].get("id")})
+        action_result.update_summary({"page_id": results[0].get("id")})
         self.save_progress("Page retrieved successfully.")
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -241,7 +208,7 @@ class ConfluenceConnector(BaseConnector):
             "test_connectivity": self._handle_test_connectivity,
             "create_page": self._handle_create_page,
             "add_comment": self._handle_add_comment,
-            "get_page": self._handle_get_page
+            "get_page": self._handle_get_page,
         }
 
         action = action_mapping.get(action_id)
