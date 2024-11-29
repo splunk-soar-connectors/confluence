@@ -18,7 +18,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **base_url** |  required  | string | Base URL
 **verify_server_cert** |  optional  | boolean | Verify server SSL certificate
 **username** |  required  | string | Username
-**apitoken** |  required  | API Token | API Token
+**apitoken** |  required  | password | API Token
 **base_path** |  required  | Base Path | Base Path
 
 ### Supported Actions  

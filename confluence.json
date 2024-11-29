@@ -42,7 +42,7 @@
         },
         "apitoken": {
             "description": "API Token",
-            "data_type": "API Token",
+            "data_type": "password",
             "required": true,
             "order": 3
         },
