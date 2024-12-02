@@ -116,7 +116,6 @@ class ConfluenceConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         headers = {"Accept": "application/json"}
 
-        self.save_progress(f"username: {self._username} api: {self._apiToken}")
         ret_val, _ = self._make_rest_call("/spaces", action_result, headers=headers, method="get")
 
         if phantom.is_fail(ret_val):
