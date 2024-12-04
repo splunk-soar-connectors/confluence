@@ -39,7 +39,7 @@ class ConfluenceConnector(BaseConnector):
         self._base_url = None
         self._base_path = None
         self._username = None
-        self._apiToken = None
+        self._api_token = None
         self._verify = None
 
     def _process_response(self, r, action_result):
@@ -98,7 +98,7 @@ class ConfluenceConnector(BaseConnector):
         try:
             response = request_func(
                 url,
-                auth=(self._username, self._apiToken),
+                auth=(self._username, self._api_token),
                 json=data,
                 headers=headers,
                 verify=self._verify,
@@ -225,7 +225,7 @@ class ConfluenceConnector(BaseConnector):
         if self._base_path:
             self._base_path = f"/{self._base_path}"
         self._username = config.get("username")
-        self._apiToken = config.get("apitoken")
+        self._api_token = config.get("apitoken")
         self._verify = config.get("verify_server_cert", False)
 
         return phantom.APP_SUCCESS
