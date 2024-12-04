@@ -19,7 +19,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **verify_server_cert** |  optional  | boolean | Verify server SSL certificate
 **username** |  required  | string | Username
 **apitoken** |  required  | password | API Token
-**base_path** |  required  | Base Path | Base Path
+**base_path** |  optional  | Base Path | Base Path
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration  

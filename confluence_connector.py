@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
-DEFAULT_REQUEST_TIMEOUT = 30  # Timeout for requests
+DEFAULT_REQUEST_TIMEOUT = 30  # In seconds
 
 
 class RetVal(tuple):
@@ -43,8 +43,7 @@ class ConfluenceConnector(BaseConnector):
         self._verify = None
 
     def _process_response(self, r, action_result):
-        if hasattr(action_result, "add_debug_data"):
-            action_result.add_debug_data({"r_status_code": r.status_code, "r_text": r.text, "r_headers": r.headers})
+        action_result.add_debug_data({"r_status_code": r.status_code, "r_text": r.text, "r_headers": r.headers})
 
         content_type = r.headers.get("Content-Type", "").lower()
 
@@ -93,7 +92,7 @@ class ConfluenceConnector(BaseConnector):
         except AttributeError:
             return RetVal(action_result.set_status(phantom.APP_ERROR, f"Invalid HTTP method: {method}"), None)
 
-        url = f"{self._base_url}{self._base_path}{endpoint}"
+        url = f"{self._base_url}{self._base_path}/{endpoint.lstrip('/')}"
         self.save_progress(f"Making {method.upper()} request to URL: {url}")
 
         try:
@@ -221,7 +220,10 @@ class ConfluenceConnector(BaseConnector):
         config = self.get_config()
 
         self._base_url = config["base_url"].rstrip("/")
-        self._base_path = config.get("base_path", "")
+        self._base_path = self._base_path = config.get("base_path", "").strip("/")
+        # Re-add a leading slash to base_path if not empty
+        if self._base_path:
+            self._base_path = f"/{self._base_path}"
         self._username = config.get("username")
         self._apiToken = config.get("apitoken")
         self._verify = config.get("verify_server_cert", False)

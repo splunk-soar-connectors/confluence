@@ -49,7 +49,7 @@
         "base_path": {
             "description": "Base Path",
             "data_type": "Base Path",
-            "required": true,
+            "required": false,
             "order": 4
         }
     },
