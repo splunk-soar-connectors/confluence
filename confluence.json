@@ -9,17 +9,17 @@
     "product_name": "Confluence",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2019-2023 Splunk Inc.",
-    "app_version": "2.0.4",
-    "utctime_updated": "2022-01-07T21:59:21.000000Z",
+    "license": "Copyright (c) 2019-2024 Splunk Inc.",
+    "app_version": "3.0.0",
+    "utctime_updated": "2024-11-29T21:14:21.000000Z",
     "package_name": "phantom_confluence",
     "main_module": "confluence_connector.py",
-    "min_phantom_version": "5.1.0",
+    "min_phantom_version": "6.3.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "python_version": "3",
     "latest_tested_versions": [
-        "On prem, Atlassian Confluence version 6.0.6"
+        "On cloud, Atlassian Confluence version 9.1.1"
     ],
     "configuration": {
         "base_url": {
@@ -40,11 +40,17 @@
             "required": true,
             "order": 2
         },
-        "password": {
-            "description": "Password",
+        "apitoken": {
+            "description": "API Token",
             "data_type": "password",
             "required": true,
             "order": 3
+        },
+        "base_path": {
+            "description": "Base Path",
+            "data_type": "Base Path",
+            "required": false,
+            "order": 4
         }
     },
     "actions": [
@@ -2047,29 +2053,5 @@
             },
             "versions": "EQ(*)"
         }
-    ],
-    "pip_dependencies": {
-        "wheel": [
-            {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
-            }
-        ]
-    },
-    "pip39_dependencies": {
-        "wheel": [
-            {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
-            }
-        ]
-    }
+    ]
 }

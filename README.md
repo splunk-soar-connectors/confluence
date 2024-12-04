@@ -2,11 +2,11 @@
 # Confluence
 
 Publisher: Splunk  
-Connector Version: 2.0.4  
+Connector Version: 3.0.0  
 Product Vendor: Atlassian  
 Product Name: Confluence  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.1.0  
+Minimum Product Version: 6.3.0  
 
 This app supports a variety of actions for content generation in Confluence
 
@@ -18,7 +18,8 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **base_url** |  required  | string | Base URL
 **verify_server_cert** |  optional  | boolean | Verify server SSL certificate
 **username** |  required  | string | Username
-**password** |  required  | password | Password
+**apitoken** |  required  | password | API Token
+**base_path** |  optional  | Base Path | Base Path
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration  
