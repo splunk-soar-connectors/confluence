@@ -10,7 +10,7 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2019-2024 Splunk Inc.",
-    "app_version": "3.0.0",
+    "app_version": "3.0.1",
     "utctime_updated": "2024-11-29T21:14:21.000000Z",
     "package_name": "phantom_confluence",
     "main_module": "confluence_connector.py",
@@ -48,7 +48,7 @@
         },
         "base_path": {
             "description": "Base Path",
-            "data_type": "Base Path",
+            "data_type": "string",
             "required": false,
             "order": 4
         }
