@@ -2,7 +2,7 @@
 # Confluence
 
 Publisher: Splunk  
-Connector Version: 3.0.1  
+Connector Version: 3.0.2  
 Product Vendor: Atlassian  
 Product Name: Confluence  
 Product Version Supported (regex): ".\*"  
