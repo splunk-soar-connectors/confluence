@@ -1,2 +1,1 @@
 **Unreleased**
-* Fixed the bug which made the app impossible to install [SOARHELP-4138]
