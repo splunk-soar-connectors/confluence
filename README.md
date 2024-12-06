@@ -2,7 +2,7 @@
 # Confluence
 
 Publisher: Splunk  
-Connector Version: 3.0.0  
+Connector Version: 3.0.1  
 Product Vendor: Atlassian  
 Product Name: Confluence  
 Product Version Supported (regex): ".\*"  
@@ -11,7 +11,7 @@ Minimum Product Version: 6.3.0
 This app supports a variety of actions for content generation in Confluence
 
 ### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Confluence asset in SOAR.
+This table lists the configuration variables required to operate Confluence. These variables are specified when configuring a Confluence asset in Splunk SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
@@ -19,7 +19,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **verify_server_cert** |  optional  | boolean | Verify server SSL certificate
 **username** |  required  | string | Username
 **apitoken** |  required  | password | API Token
-**base_path** |  optional  | Base Path | Base Path
+**base_path** |  optional  | string | Base Path
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration  
