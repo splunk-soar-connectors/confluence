@@ -10,8 +10,8 @@ Minimum Product Version: 6.3.0
 
 This app supports a variety of actions for content generation in Confluence
 
-### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Confluence asset in SOAR.
+### Configuration variables
+This table lists the configuration variables required to operate Confluence. These variables are specified when configuring a Confluence asset in Splunk SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
