@@ -1,1 +1,2 @@
 **Unreleased**
+* PAPP-35149 | fix dangling sys.exit

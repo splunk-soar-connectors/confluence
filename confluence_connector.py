@@ -252,5 +252,3 @@ if __name__ == "__main__":
     print(json.dumps(result, indent=4))
 
     sys.exit(0)
-
-sys.exit(0)
