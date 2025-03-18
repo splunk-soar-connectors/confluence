@@ -1,6 +1,6 @@
 # File: confluence_connector.py
 #
-# Copyright (c) 2019-2024 Splunk Inc.
+# Copyright (c) 2019-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
+
 DEFAULT_REQUEST_TIMEOUT = 30  # In seconds
 
 
@@ -34,7 +35,7 @@ class RetVal(tuple):
 
 class ConfluenceConnector(BaseConnector):
     def __init__(self):
-        super(ConfluenceConnector, self).__init__()
+        super().__init__()
         self._state = None
         self._base_url = None
         self._base_path = None
@@ -78,7 +79,7 @@ class ConfluenceConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Failed to parse JSON: {str(e)}"), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Failed to parse JSON: {e!s}"), None)
 
         if 200 <= r.status_code < 400:
             return RetVal(phantom.APP_SUCCESS, resp_json)
@@ -106,7 +107,7 @@ class ConfluenceConnector(BaseConnector):
                 timeout=DEFAULT_REQUEST_TIMEOUT,
             )
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Connection error: {str(e)}"), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Connection error: {e!s}"), None)
 
         self.save_progress(f"Response Status Code: {response.status_code}")
         return self._process_response(response, action_result)
