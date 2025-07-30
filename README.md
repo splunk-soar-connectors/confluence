@@ -1,7 +1,7 @@
 # Confluence
 
 Publisher: Splunk \
-Connector Version: 3.0.3 \
+Connector Version: 3.0.4 \
 Product Vendor: Atlassian \
 Product Name: Confluence \
 Minimum Product Version: 6.3.0

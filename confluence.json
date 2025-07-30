@@ -10,14 +10,17 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2019-2025 Splunk Inc.",
-    "app_version": "3.0.3",
-    "utctime_updated": "2024-12-09T16:38:55.000000Z",
+    "app_version": "3.0.4",
+    "utctime_updated": "2025-07-30T17:39:52.606874Z",
     "package_name": "phantom_confluence",
     "main_module": "confluence_connector.py",
     "min_phantom_version": "6.3.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
-    "python_version": ["3.9", "3.13"],
+    "python_version": [
+        "3.9",
+        "3.13"
+    ],
     "latest_tested_versions": [
         "On cloud, Atlassian Confluence version 9.1.1"
     ],
