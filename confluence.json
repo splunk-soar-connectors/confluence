@@ -17,7 +17,7 @@
     "min_phantom_version": "6.3.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
-    "python_version": "3",
+    "python_version": ["3.9", "3.13"],
     "latest_tested_versions": [
         "On cloud, Atlassian Confluence version 9.1.1"
     ],
