@@ -1,6 +1,6 @@
 # File: confluence_connector.py
 #
-# Copyright (c) 2019-2025 Splunk Inc.
+# Copyright (c) 2019-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import json
 import phantom.app as phantom
 import requests
 from bs4 import BeautifulSoup
+from phantom import vault
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
@@ -87,7 +88,7 @@ class ConfluenceConnector(BaseConnector):
         error_message = resp_json.get("message", r.text[:500])
         return RetVal(action_result.set_status(phantom.APP_ERROR, f"Error from server: {error_message}"), None)
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, files=None, method="get"):
         try:
             request_func = getattr(requests, method.lower())
         except AttributeError:
@@ -104,6 +105,7 @@ class ConfluenceConnector(BaseConnector):
                 headers=headers,
                 verify=self._verify,
                 params=params,
+                files=files,
                 timeout=DEFAULT_REQUEST_TIMEOUT,
             )
         except Exception as e:
@@ -115,8 +117,9 @@ class ConfluenceConnector(BaseConnector):
     def _handle_test_connectivity(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         headers = {"Accept": "application/json"}
+        params = {"limit": 1}  # Limit to 1 result for testing connectivity
 
-        ret_val, _ = self._make_rest_call("/spaces", action_result, headers=headers, method="get")
+        ret_val, _ = self._make_rest_call("/spaces", action_result, headers=headers, params=params, method="get")
 
         if phantom.is_fail(ret_val):
             self.save_progress("Test Connectivity Failed")
@@ -128,11 +131,24 @@ class ConfluenceConnector(BaseConnector):
     def _handle_create_page(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        space_key = param["space_key"]
-        title = param["title"]
-        parent_page_id = param.get("parent_page_id")
+        if param["space_id"].isdigit():
+            space_id = param["space_id"]
+        else:
+            space_id = self._get_space_id(param["space_id"], action_result)
+            if not space_id:
+                return action_result.get_status()
 
-        data = {"spaceId": space_key, "title": title, "parent_page_id": parent_page_id}
+        title = param["title"]
+        parent_page_id = param.get("parent_page_id", "")
+        body = param.get("body", "")
+
+        data = {
+            "type": "page",
+            "spaceId": space_id,
+            "title": title,
+            "parentId": parent_page_id,
+            "body": {"storage": {"value": body, "representation": "storage"}},
+        }
 
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
@@ -172,10 +188,16 @@ class ConfluenceConnector(BaseConnector):
         """Retrieve a page by space key and title."""
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        space_key = param["space_key"]
+        if param["space_id"].isdigit():
+            space_id = param["space_id"]
+        else:
+            space_id = self._get_space_id(param["space_id"], action_result)
+            if not space_id:
+                return action_result.get_status()
+
         title = param["title"]
 
-        params = {"spaceKey": space_key, "title": title}
+        params = {"body-format": "storage", "space-id": space_id, "title": title}
 
         headers = {"Accept": "application/json"}
 
@@ -199,6 +221,156 @@ class ConfluenceConnector(BaseConnector):
         self.save_progress("Page retrieved successfully.")
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_get_child_pages(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        page_id = param["page_id"]
+        sort = param.get("sort", "")
+        limit = param.get("limit", "")
+
+        params = {}
+
+        if sort:
+            params["sort"] = sort
+        if limit:
+            params["limit"] = limit
+
+        # Optional values should use the .get() function
+        # optional_parameter = param.get('optional_parameter', 'default_value')
+
+        # make rest call
+        ret_val, response = self._make_rest_call(f"/pages/{page_id}/direct-children", action_result, params=params, headers=None)
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            # return action_result.get_status()
+            pass
+
+        summary = action_result.update_summary({})
+        if len(response["results"]) > 0:
+            self.save_progress("Page Found")
+            for result in response["results"]:
+                summary["children"] = result["title"]
+
+        else:
+            self.save_progress("Page not found")
+            summary["children"] = None
+            action_result.add_data(response)
+            return action_result.set_status(phantom.APP_ERROR, "Page not found")
+
+        action_result.add_data(response)
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _handle_create_attachement(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        page_id = param["page_id"]
+        file_hash = param["file_hash"]
+
+        success, message, info = vault.vault_info(vault_id=file_hash)
+        if not success:
+            self.save_progress(f"Failed to retrieve file from vault: {message}")
+            return action_result.set_status(phantom.APP_ERROR, f"Failed to retrieve file from vault: {message}")
+
+        # Optional values should use the .get() function
+        file_name = param.get("file_name", "")
+        if not file_name:
+            file_name = info[0]["name"]
+
+        file_path = info[0]["path"]
+        content_type = "multipart/form-data"
+
+        _headers = {"X-Atlassian-Token": "no-check"}
+
+        f = open(file_path, "rb")
+        file_data = f.read()
+        f.close()
+
+        files = {"file": (file_name, file_data, content_type), "minorEdit": "true"}
+
+        # utilizes v1 api
+        self._base_path = "/rest/api"
+        # make rest call
+        ret_val, response = self._make_rest_call(
+            f"/content/{page_id}/child/attachment", action_result, params=None, headers=_headers, files=files, method="post"
+        )
+
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+
+        # Add the response into the data section
+        # action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        summary = action_result.update_summary({})
+        if len(response["results"]) > 0:
+            self.save_progress("Attachment added.")
+            summary["attachment_id"] = response["results"][0]["id"]
+
+        else:
+            self.save_progress("Attachment not added.")
+            summary["attachment_id"] = None
+            action_result.add_data(response)
+            return action_result.set_status(phantom.APP_ERROR, "Attachment failed.")
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        action_result.add_data(response)
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}. Action Status: {phantom.APP_SUCCESS}")
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _get_space_id(self, space_key, action_result):
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+
+        # Access action parameters passed in the 'param' dictionary
+        _headers = {"Accept": "application/json"}
+
+        params = {"keys": space_key}
+
+        # Optional values should use the .get() function
+        # optional_parameter = param.get('optional_parameter', 'default_value')
+
+        # make rest call
+        ret_val, response = self._make_rest_call("/spaces", action_result, params=params, headers=_headers)
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            # return action_result.get_status()
+            pass
+
+        # Now post process the data,  uncomment code as you deem fit
+        # summary = action_result.update_summary({})
+        if len(response["results"]) > 0:
+            self.save_progress("Space found")
+            for result in response["results"]:
+                space_id = result["id"]
+
+        else:
+            self.save_progress("Space not found")
+            return action_result.set_status(phantom.APP_ERROR, "Space not found")
+
+        # action_result.add_data(response)
+        return space_id
+
     def handle_action(self, param):
         action_id = self.get_action_identifier()
         self.debug_print(f"Action ID: {action_id}")
@@ -208,6 +380,8 @@ class ConfluenceConnector(BaseConnector):
             "create_page": self._handle_create_page,
             "add_comment": self._handle_add_comment,
             "get_page": self._handle_get_page,
+            "get_child_pages": self._handle_get_child_pages,
+            "create_attachment": self._handle_create_attachement,
         }
 
         action = action_mapping.get(action_id)
