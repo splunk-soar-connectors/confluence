@@ -9,15 +9,15 @@
     "product_name": "Confluence",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2019-2025 Splunk Inc.",
-    "app_version": "3.0.5",
+    "license": "Copyright (c) 2019-2026 Splunk Inc.",
+    "app_version": "3.1.0",
     "utctime_updated": "2025-08-01T20:30:40.027872Z",
     "package_name": "phantom_confluence",
     "main_module": "confluence_connector.py",
     "min_phantom_version": "6.3.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
-    "python_version": "3.9, 3.13",
+    "python_version": "3.13",
     "latest_tested_versions": [
         "On cloud, Atlassian Confluence version 9.1.1"
     ],
@@ -50,7 +50,12 @@
             "description": "Base Path",
             "data_type": "string",
             "required": false,
-            "order": 4
+            "order": 4,
+            "value_list": [
+                "/api/v2",
+                "/rest/api"
+            ],
+            "default": "/api/v2"
         }
     },
     "actions": [
@@ -988,11 +993,11 @@
             "type": "generic",
             "read_only": false,
             "parameters": {
-                "space_key": {
-                    "description": "Name of the space to create the page",
+                "space_id": {
+                    "description": "Name of the space to create the page, or numerical ID of the space",
                     "data_type": "string",
                     "contains": [
-                        "confluence space key"
+                        "confluence space id"
                     ],
                     "required": true,
                     "primary": true,
@@ -1012,6 +1017,19 @@
                     ],
                     "primary": true,
                     "order": 2
+                },
+                "body": {
+                    "description": "Content of page in Storage format",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 3,
+                    "name": "body",
+                    "id": 4,
+                    "param_name": "body"
                 }
             },
             "output": [
@@ -1019,7 +1037,7 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "Status",
-                    "column_order": 3,
+                    "column_order": 2,
                     "example_values": [
                         "success",
                         "failed"
@@ -1038,22 +1056,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.space_key",
-                    "data_type": "string",
-                    "column_name": "Space Key",
-                    "column_order": 1,
-                    "contains": [
-                        "confluence space key"
-                    ],
-                    "example_values": [
-                        "TST"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.title",
                     "data_type": "string",
                     "column_name": "Title",
-                    "column_order": 2,
+                    "column_order": 1,
                     "example_values": [
                         "Shift Log"
                     ]
@@ -1731,6 +1737,17 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.space_id",
+                    "data_type": "string",
+                    "contains": [
+                        "confluence space id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.body",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -1745,13 +1762,13 @@
             "type": "investigate",
             "read_only": true,
             "parameters": {
-                "space_key": {
-                    "description": "Name of the space containing the page",
+                "space_id": {
+                    "description": "Name of the space containing the page, or ID of the space",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "confluence space key"
+                        "confluence space id or key"
                     ],
                     "order": 0
                 },
@@ -1774,12 +1791,12 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.space_key",
+                    "data_path": "action_result.parameter.space_id",
                     "data_type": "string",
-                    "column_name": "Space Key",
+                    "column_name": "Space id",
                     "column_order": 0,
                     "contains": [
-                        "confluence space key"
+                        "confluence space id or key"
                     ],
                     "example_values": [
                         "TST"
@@ -1826,72 +1843,72 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.ancestors",
+                    "data_path": "action_result.data.*._expandable.ancestors",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.children",
+                    "data_path": "action_result.data.*._expandable.children",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/content/65601/child"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.container",
+                    "data_path": "action_result.data.*._expandable.container",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/space/TST"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.descendants",
+                    "data_path": "action_result.data.*._expandable.descendants",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/content/65601/descendant"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.history",
+                    "data_path": "action_result.data.*._expandable.history",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/content/65601/history"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.metadata",
+                    "data_path": "action_result.data.*._expandable.metadata",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.operations",
+                    "data_path": "action_result.data.*._expandable.operations",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.restrictions",
+                    "data_path": "action_result.data.*._expandable.restrictions",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/content/65601/restriction/byOperation"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.space",
+                    "data_path": "action_result.data.*._expandable.space",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/space/TST"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._expandable.version",
+                    "data_path": "action_result.data.*._expandable.version",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._links.edit",
+                    "data_path": "action_result.data.*._links.edit",
                     "data_type": "string",
                     "example_values": [
                         "/pages/resumedraft.action?draftId=65601"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._links.self",
+                    "data_path": "action_result.data.*._links.self",
                     "data_type": "string",
                     "example_values": [
                         "http://192.16.195.173:9090/rest/api/content/65601"
@@ -1901,7 +1918,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._links.tinyui",
+                    "data_path": "action_result.data.*._links.tinyui",
                     "data_type": "string",
                     "example_values": [
                         "/x/QQAB",
@@ -1909,62 +1926,62 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*._links.webui",
+                    "data_path": "action_result.data.*._links.webui",
                     "data_type": "string",
                     "example_values": [
                         "/display/TST/TST+Home"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body._expandable.anonymous_export_view",
+                    "data_path": "action_result.data.*.body._expandable.anonymous_export_view",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body._expandable.editor",
+                    "data_path": "action_result.data.*.body._expandable.editor",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body._expandable.export_view",
+                    "data_path": "action_result.data.*.body._expandable.export_view",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body._expandable.styled_view",
+                    "data_path": "action_result.data.*.body._expandable.styled_view",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body._expandable.view",
+                    "data_path": "action_result.data.*.body._expandable.view",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body.storage._expandable.content",
+                    "data_path": "action_result.data.*.body.storage._expandable.content",
                     "data_type": "string",
                     "example_values": [
                         "/rest/api/content/65601"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body.storage.representation",
+                    "data_path": "action_result.data.*.body.storage.representation",
                     "data_type": "string",
                     "example_values": [
                         "storage"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.body.storage.value",
+                    "data_path": "action_result.data.*.body.storage.value",
                     "data_type": "string",
                     "example_values": [
                         "<ac:layout><ac:layout-section ac:type=\"single\"><ac:layout-cell>\n<ac:structured-macro ac:name=\"tip\" ac:schema-version=\"1\" ac:macro-id=\"935965cb-dcd1-4334-9f43-d33256d38f67\"><ac:parameter ac:name=\"title\">Welcome to your new space!</ac:parameter><ac:rich-text-body><p>Confluence spaces are great for sharing content and news with your team. This is your home page. Right now it shows recent space activity, but you can customize this page in any way you like.</p></ac:rich-text-body></ac:structured-macro><h2>Complete these tasks to get started</h2><ac:task-list>\n<ac:task>\n<ac:task-id>1</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Edit this home page</strong> - Click <em>Edit</em> in the top right of this screen to customize your Space home page</ac:task-body>\n</ac:task>\n<ac:task>\n<ac:task-id>2</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Create your first page</strong> - Click the <em>Create</em> button in the header to get started</ac:task-body>\n</ac:task>\n<ac:task>\n<ac:task-id>3</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Brand your Space</strong> - Click <em>Configure Sidebar</em> in the left panel to update space details and logo</ac:task-body>\n</ac:task>\n<ac:task>\n<ac:task-id>4</ac:task-id>\n<ac:task-status>incomplete</ac:task-status>\n<ac:task-body><strong>Set permissions</strong> - Click <em>Space Tools</em> in the left sidebar to update permissions and give others access</ac:task-body>\n</ac:task>\n</ac:task-list><p>&nbsp;</p></ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"two_equal\"><ac:layout-cell>\n<h2>Recent space activity</h2><p><ac:structured-macro ac:name=\"recently-updated\" ac:schema-version=\"1\" ac:macro-id=\"bb48b3e3-1171-4799-867e-32938d991be7\"><ac:parameter ac:name=\"types\">page, comment, blogpost</ac:parameter><ac:parameter ac:name=\"max\">5</ac:parameter><ac:parameter ac:name=\"hideHeading\">true</ac:parameter><ac:parameter ac:name=\"theme\">social</ac:parameter></ac:structured-macro></p></ac:layout-cell><ac:layout-cell>\n<h2>Space contributors</h2><p><ac:structured-macro ac:name=\"contributors\" ac:schema-version=\"1\" ac:macro-id=\"fdf07fe9-d741-4e36-816a-c89d567f054e\"><ac:parameter ac:name=\"mode\">list</ac:parameter><ac:parameter ac:name=\"scope\">descendants</ac:parameter><ac:parameter ac:name=\"limit\">5</ac:parameter><ac:parameter ac:name=\"showLastTime\">true</ac:parameter><ac:parameter ac:name=\"order\">update</ac:parameter></ac:structured-macro></p></ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"single\"><ac:layout-cell>\n<p>&nbsp;</p></ac:layout-cell></ac:layout-section></ac:layout>"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.extensions.position",
+                    "data_path": "action_result.data.*.extensions.position",
                     "data_type": "string",
                     "example_values": [
                         "none"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.id",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "string",
                     "column_name": "Page ID",
                     "column_order": 3,
@@ -1976,7 +1993,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.status",
+                    "data_path": "action_result.data.*.status",
                     "data_type": "string",
                     "column_name": "Page Status",
                     "column_order": 4,
@@ -1985,14 +2002,14 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.title",
+                    "data_path": "action_result.data.*.title",
                     "data_type": "string",
                     "example_values": [
                         "TST Home"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.results.*.type",
+                    "data_path": "action_result.data.*.type",
                     "data_type": "string",
                     "example_values": [
                         "page"
@@ -2052,6 +2069,209 @@
                 "type": "table"
             },
             "versions": "EQ(*)"
+        },
+        {
+            "action": "get child pages",
+            "identifier": "get_child_pages",
+            "description": "Get all child pages given a specific ID",
+            "verbose": "",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "page_id": {
+                    "description": "Page ID for to return child pages",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0,
+                    "name": "page_id",
+                    "id": 1,
+                    "param_name": "page_id"
+                },
+                "sort": {
+                    "description": "Sort by, options in More",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [
+                        "id",
+                        "-id",
+                        "created-date",
+                        "-created-date",
+                        "modified-date",
+                        "-modified-date",
+                        "title",
+                        "-title"
+                    ],
+                    "default": "-created-date",
+                    "order": 1,
+                    "name": "sort",
+                    "id": 2,
+                    "param_name": "sort"
+                },
+                "limit": {
+                    "description": "Limit the number of results",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 2,
+                    "name": "limit",
+                    "id": 3,
+                    "param_name": "limit"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.page_id",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "page_id",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.sort",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "sort",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.limit",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "limit",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "create attachment",
+            "identifier": "create_attachment",
+            "description": "Adds an attachment to a piece of content",
+            "verbose": "",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "page_id": {
+                    "description": "ID of page to upload",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0,
+                    "name": "page_id",
+                    "id": 1,
+                    "param_name": "page_id"
+                },
+                "file_hash": {
+                    "description": "File hash to submit",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 1,
+                    "name": "file_hash",
+                    "id": 2,
+                    "param_name": "file_hash"
+                },
+                "file_name": {
+                    "description": "File name",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 2,
+                    "name": "file_name",
+                    "id": 3,
+                    "param_name": "file_name"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.page_id",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "page_id",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.file_hash",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "file_hash",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.file_name",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "file_name",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
         }
-    ]
+    ],
+    "pip39_dependencies": {
+        "wheel": []
+    },
+    "pip313_dependencies": {
+        "wheel": []
+    }
 }
