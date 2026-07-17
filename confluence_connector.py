@@ -227,7 +227,7 @@ class ConfluenceConnector(BaseConnector):
             self._base_path = f"/{self._base_path}"
         self._username = config.get("username")
         self._api_token = config.get("apitoken")
-        self._verify = config.get("verify_server_cert", False)
+        self._verify = config.get("verify_server_cert", True)
 
         return phantom.APP_SUCCESS
 
