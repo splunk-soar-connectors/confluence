@@ -1,6 +1,6 @@
 # File: confluence_connector.py
 #
-# Copyright (c) 2019-2025 Splunk Inc.
+# Copyright (c) 2019-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -227,7 +227,7 @@ class ConfluenceConnector(BaseConnector):
             self._base_path = f"/{self._base_path}"
         self._username = config.get("username")
         self._api_token = config.get("apitoken")
-        self._verify = config.get("verify_server_cert", False)
+        self._verify = config.get("verify_server_cert", True)
 
         return phantom.APP_SUCCESS
 

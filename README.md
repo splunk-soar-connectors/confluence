@@ -1,9 +1,9 @@
 # Confluence
 
-Publisher: Splunk \
-Connector Version: 3.0.5 \
-Product Vendor: Atlassian \
-Product Name: Confluence \
+Publisher: Splunk <br>
+Connector Version: 3.0.5 <br>
+Product Vendor: Atlassian <br>
+Product Name: Confluence <br>
 Minimum Product Version: 6.3.0
 
 This app supports a variety of actions for content generation in Confluence
@@ -22,16 +22,16 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration \
-[add comment](#action-add-comment) - Add a comment to an existing page \
-[create page](#action-create-page) - Create a page in the space \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration <br>
+[add comment](#action-add-comment) - Add a comment to an existing page <br>
+[create page](#action-create-page) - Create a page in the space <br>
 [get page](#action-get-page) - Get a page by name
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using the supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -46,7 +46,7 @@ No Output
 
 Add a comment to an existing page
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -193,7 +193,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Create a page in the space
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -319,7 +319,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Get a page by name
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -379,7 +379,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
