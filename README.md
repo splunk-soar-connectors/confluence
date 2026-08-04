@@ -15,7 +15,7 @@ This table lists the configuration variables required to operate Confluence. The
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **base_url** | required | string | Base URL |
-**verify_server_cert** | optional | boolean | Verify server SSL certificate |
+**verify_server_cert** | optional | boolean | Verify the server TLS certificate. Disable only as an explicit, approved opt-out for an asset whose certificate cannot be verified. |
 **username** | required | string | Username |
 **apitoken** | required | password | API Token |
 **base_path** | optional | string | Base Path |

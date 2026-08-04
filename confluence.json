@@ -29,7 +29,7 @@
             "order": 0
         },
         "verify_server_cert": {
-            "description": "Verify server SSL certificate",
+            "description": "Verify the server TLS certificate. Disable only as an explicit, approved opt-out for an asset whose certificate cannot be verified.",
             "data_type": "boolean",
             "default": true,
             "order": 1
